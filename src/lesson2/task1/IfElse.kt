@@ -3,6 +3,8 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.quadraticRootProduct
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -68,7 +70,14 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String = when {
+    ((age % 10) == 0) || ((age % 100) in (9..19)) || (age % 10 in 5..11) -> "$age лет"
+    age % 10 == 1 -> "$age год"
+    age % 10 in 2..4 -> "$age года"
+    else -> {
+        "$age года"
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -81,7 +90,17 @@ fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double = TODO()
+): Double {
+    val length = ((t1 * v1) + (t2 * v2) + (t3 * v3))
+    val length1 = (t1 * v1)
+    val length2 = (t2 * v2)
+    return when {
+        length1 >= (length / 2) -> length / 2 / v1
+        (length2 + (length1)) >= (length / 2) -> t1 + (length / 2 - length1) / v2
+        else -> t1 + t2 + ((length / 2) - length2 - length1) / v3
+    }
+}
+
 
 /**
  * Простая (2 балла)
@@ -96,7 +115,23 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    var total = 0
+    val a = (kingX == rookX1) || (kingY == rookY1)
+    val b = (kingY == rookY2) || (kingX == rookX2)
+    return if (a) {
+        if (!b) {
+            1
+        } else {
+            3
+        }
+    } else if (b) 2
+    else {
+        0
+    }
+    return total
+}
+
 
 /**
  * Простая (2 балла)
@@ -112,7 +147,13 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = TODO()
+): Int {
+    var total = 0
+    if ((kingX == rookX) || (kingY == rookY)) total++
+    if (abs(kingX - bishopX) == abs(kingY - bishopY)) total += 2
+    return total
+}
+
 
 /**
  * Простая (2 балла)
@@ -132,4 +173,11 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
+    (d <= b) && (a <= c) -> d - c
+    (a > d) || (c > b) -> -1
+    (a <= c) -> (b - c)
+    (b <= d) && (c <= a) -> b - a
+    else -> (d - a)
+}
+
