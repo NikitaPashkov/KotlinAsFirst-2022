@@ -65,4 +65,17 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    val min_ab = (if (a <= b) a else b)
+    val min_ac = (if (a <= c) a else c)
+    val min_d = (if (min_ab <= min_ac) min_ab else min_ac)
+
+    val max_ab = (if (a >= b) a else b)
+    val max_ac = (if (a >= c) a else c)
+    val max_d = (if (max_ab >= max_ac) max_ab else max_ac)
+
+    val wav = c + a - max_d - min_d + b
+
+    return min_d <= (if (r < s) r else s) && wav <= (if (r >= s) r else s)
+}
