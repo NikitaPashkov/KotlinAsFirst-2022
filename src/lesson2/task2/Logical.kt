@@ -74,7 +74,6 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     val max_ab = (if (a >= b) a else b)
     val max_ac = (if (a >= c) a else c)
     val max_d = (if (max_ab >= max_ac) max_ab else max_ac)
-
     val wav = c + a - max_d - min_d + b
 
     return min_d <= (if (r < s) r else s) && wav <= (if (r >= s) r else s)
