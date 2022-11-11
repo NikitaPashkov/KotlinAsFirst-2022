@@ -91,13 +91,13 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double {
-    val length = ((t1 * v1) + (t2 * v2) + (t3 * v3))
-    val length1 = (t1 * v1)
-    val length2 = (t2 * v2)
+    val length = t1 * v1 + t2 * v2 + t3 * v3
+    val length1 = t1 * v1
+    val length2 = t2 * v2
     return when {
-        length1 >= (length / 2) -> length / 2 / v1
-        (length2 + (length1)) >= (length / 2) -> t1 + (length / 2 - length1) / v2
-        else -> t1 + t2 + ((length / 2) - length2 - length1) / v3
+        length1 >= length / 2 -> length / 2 / v1
+        (length2 + (length1)) >= length / 2 -> t1 + (length / 2 - length1) / v2
+        else -> t1 + t2 + (length / 2 - length2 - length1) / v3
     }
 }
 
@@ -149,7 +149,7 @@ fun rookOrBishopThreatens(
     bishopX: Int, bishopY: Int
 ): Int {
     var total = 0
-    if ((kingX == rookX) || (kingY == rookY)) total++
+    if (kingX == rookX || kingY == rookY) total++
     if (abs(kingX - bishopX) == abs(kingY - bishopY)) total += 2
     return total
 }
@@ -174,10 +174,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
-    (d <= b) && (a <= c) -> d - c
-    (a > d) || (c > b) -> -1
-    (a <= c) -> (b - c)
-    (b <= d) && (c <= a) -> b - a
-    else -> (d - a)
+    d <= b && a <= c -> d - c
+    a > d || c > b -> -1
+    a <= c -> b - c
+    b <= d && c <= a -> b - a
+    else -> d - a
 }
 

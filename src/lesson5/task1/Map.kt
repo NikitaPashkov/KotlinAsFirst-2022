@@ -96,7 +96,15 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+    val namesToGrades = mutableMapOf<Int, MutableList<String>>()
+    for ((key: String, name) in grades) {
+        if (namesToGrades[name] != null)
+            namesToGrades[name]?.add(key)
+        else namesToGrades[name] = mutableListOf(key)
+    }
+    return namesToGrades
+}
 
 /**
  * Простая (2 балла)
@@ -108,7 +116,13 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
+    for ((key, value) in a)
+        if (b[key] != value) {
+            return false
+        }
+    return true
+}
 
 /**
  * Простая (2 балла)
@@ -125,7 +139,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    TODO()
+    for ((key, value) in b) if (value == a[key]) a.remove(key)
 }
 
 /**
@@ -135,7 +149,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * В выходном списке не должно быть повторяющихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = (a).intersect((b).toSet()).toSet().toList()
 
 /**
  * Средняя (3 балла)
@@ -208,7 +222,13 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    val repeats = mutableMapOf<String, Int>()
+    for (x in list.indices)
+        if (!repeats.containsKey(list[x])) repeats[list[x]] = 1
+        else repeats[list[x]] = repeats.getValue(list[x]) + 1
+    return repeats.filterValues { it > 1 }
+}
 
 /**
  * Средняя (3 балла)

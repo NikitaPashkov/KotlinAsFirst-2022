@@ -179,7 +179,8 @@ fun lcm(m: Int, n: Int): Int {
 fun isCoPrime(m: Int, n: Int): Boolean {
     var x = m
     var y = n
-    while (x != y) if (x > y) x -= y else y -= x
+    while (x != y)
+        if (x > y) x -= y else y -= x
     return when {
         (y != 1) && (x != 1) -> x == 1
         else -> true
@@ -254,7 +255,7 @@ fun sin(x: Double, eps: Double): Double {
     var a = 1
     var b = 0
     while (abs(currentK) >= eps) {
-        currentK = (((-1.0).pow(b) * number.pow(a)) / factorial(a))
+        currentK = (-1.0).pow(b) * number.pow(a) / factorial(a)
         b++
         a += 2
         s += currentK
