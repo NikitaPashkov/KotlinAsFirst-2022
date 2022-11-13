@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import kotlin.time.Duration.Companion.seconds
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -297,7 +299,14 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    var sol = Pair(-1, -1)
+    for (n in list.indices) {
+        if ((number - list[n] in list) && (n != list.indexOf(number - list[n])))
+            return Pair(minOf(n, list.indexOf(number - list[n])), maxOf(n, list.indexOf(number - list[n])))
+    }
+    return sol
+}
 
 /**
  * Очень сложная (8 баллов)
@@ -321,3 +330,5 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+
+
