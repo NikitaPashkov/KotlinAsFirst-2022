@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import kotlin.math.max
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -113,8 +114,11 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+val lines = File(inputName).readLines()
+val maxLength = lines.maxBy { it.trim().length }?.length?: 0
+File(outputName).writeText(lines.joinToString("\n") { it.trim().padStart(it.trim().length + (maxLength - it.trim().length) / 2) })
 }
+
 
 /**
  * Сложная (20 баллов)
@@ -144,7 +148,32 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    var max = Int.MIN_VALUE
+    File(inputName).forEachLine { max = max(max, it.trim().length) }
+    File(inputName).forEachLine {
+        val line = it.trim()
+        val words = line.split(" ")
+        val spacesAmount = words.size - 1
+        if (spacesAmount == 0) {
+            writer.write(line + "\n")
+        } else {
+            val toWrite = StringBuilder()
+            val diff = max - words.joinToString(separator = "").length
+            val avgSpace = diff / spacesAmount
+            var extraSpace = diff % spacesAmount
+            words.forEach { word ->
+                if (extraSpace > 0) {
+                    toWrite.append(word + " ".repeat(avgSpace + 1))
+                    extraSpace -= 1
+                } else {
+                    toWrite.append(word + " ".repeat(avgSpace))
+                }
+            }
+            writer.write(toWrite.toString().trim() + "\n")
+        }
+    }
+    writer.close()
 }
 
 /**

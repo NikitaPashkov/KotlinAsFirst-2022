@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import kotlin.math.max
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -127,7 +129,18 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    var j = jumps
+    if (Regex("""[^\d\s%\-+]|\s\s|--|\+\+|[\d-+]%|%%%\s*\S+|[\d+]\+|[\d-]-|[%-+]\d""").find(j) != null)
+        return -1
+    val results = Regex("""\d+\s%{0,2}\+""").findAll(j)
+    var maxRes = 0
+    for (a in results) {
+        if (a.value.split(" ")[1].endsWith('+')) maxRes = max(maxRes, a.value.split(" ")[0].toInt())
+    }
+    return maxRes
+}
+
 
 /**
  * Сложная (6 баллов)
@@ -149,7 +162,16 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val part = str.lowercase().split(" ")
+    var len = 0
+    for (i in 0 until part.size - 1)
+        if (part[i] == part[i + 1]) return len
+        else {
+            len += 1 + part[i].length
+        }
+    return -1
+}
 
 /**
  * Сложная (6 баллов)
