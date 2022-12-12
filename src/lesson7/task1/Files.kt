@@ -115,6 +115,10 @@ fun sibilants(inputName: String, outputName: String) {
  */
 fun centerFile(inputName: String, outputName: String) {
 val lines = File(inputName).readLines()
+    if (lines.size == 0){
+        File(outputName).writeText("")
+        return
+    }
 val maxLength = lines.maxBy { it.trim().length }?.length?: 0
 File(outputName).writeText(lines.joinToString("\n") { it.trim().padStart(it.trim().length + (maxLength - it.trim().length) / 2) })
 }
@@ -164,10 +168,10 @@ fun alignFileByWidth(inputName: String, outputName: String) {
             var extraSpace = diff % spacesAmount
             words.forEach { word ->
                 if (extraSpace > 0) {
-                    toWrite.append(word + " ".repeat(avgSpace + 1))
+                    toWrite.append(word.trim() + " ".repeat(avgSpace + 1))
                     extraSpace -= 1
                 } else {
-                    toWrite.append(word + " ".repeat(avgSpace))
+                    toWrite.append(word.trim() + " ".repeat(avgSpace))
                 }
             }
             writer.write(toWrite.toString().trim() + "\n")
