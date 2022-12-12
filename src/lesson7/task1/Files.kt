@@ -119,6 +119,10 @@ val lines = File(inputName).readLines()
         File(outputName).writeText("")
         return
     }
+    if (lines.size == 1){
+        File(outputName).writeText(lines.toString().trim())
+        return
+    }
 val maxLength = lines.maxBy { it.trim().length }?.length?: 0
 File(outputName).writeText(lines.joinToString("\n") { it.trim().padStart(it.trim().length + (maxLength - it.trim().length) / 2) })
 }
@@ -152,7 +156,13 @@ File(outputName).writeText(lines.joinToString("\n") { it.trim().padStart(it.trim
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
+    val writer_haha = File(inputName).readLines();
     val writer = File(outputName).bufferedWriter()
+    if (writer_haha.size == 1) {
+        writer.write(writer_haha.toString().trim())
+        return
+    }
+
     var max = Int.MIN_VALUE
     File(inputName).forEachLine { max = max(max, it.trim().length) }
     File(inputName).forEachLine {
