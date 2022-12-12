@@ -115,7 +115,7 @@ fun sibilants(inputName: String, outputName: String) {
  */
 fun centerFile(inputName: String, outputName: String) {
 val lines = File(inputName).readLines()
-    if (lines.size == 0){
+    if (lines.isEmpty()){
         File(outputName).writeText("")
         return
     }
@@ -123,8 +123,8 @@ val lines = File(inputName).readLines()
         File(outputName).writeText(lines[0].trim())
         return
     }
-val maxLength = lines.maxBy { it.trim().length }?.length?: 0
-File(outputName).writeText(lines.joinToString("\n") { it.trim().padStart(it.trim().length + (maxLength - it.trim().length) / 2) })
+    val maxLength = lines.maxBy { it.trim().length }.trim().length ?: 0
+    File(outputName).writeText(lines.joinToString("\n") { it.trim().padStart(it.trim().length + (maxLength - it.trim().length) / 2)})
 }
 
 
@@ -156,14 +156,7 @@ File(outputName).writeText(lines.joinToString("\n") { it.trim().padStart(it.trim
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    val writer_haha = File(inputName).readLines();
     val writer = File(outputName).bufferedWriter()
-    if (writer_haha.size == 1) {
-        writer.write(writer_haha[0].trim())
-        writer.close()
-        return
-    }
-
     var max = Int.MIN_VALUE
     File(inputName).forEachLine { max = max(max, it.trim().length) }
     File(inputName).forEachLine {
@@ -174,7 +167,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
             writer.write(line + "\n")
         } else {
             val toWrite = StringBuilder()
-            val diff = max - words.joinToString(separator = "").length
+            val diff = max - words.joinToString(separator = "").replace(" +".toRegex(), " ").trim().length
             val avgSpace = diff / spacesAmount
             var extraSpace = diff % spacesAmount
             words.forEach { word ->
