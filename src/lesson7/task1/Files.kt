@@ -120,7 +120,7 @@ val lines = File(inputName).readLines()
         return
     }
     if (lines.size == 1){
-        File(outputName).writeText(lines[0])
+        File(outputName).writeText(lines[0].trim())
         return
     }
 val maxLength = lines.maxBy { it.trim().length }?.length?: 0
@@ -159,7 +159,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     val writer_haha = File(inputName).readLines();
     val writer = File(outputName).bufferedWriter()
     if (writer_haha.size == 1) {
-        writer.write(writer_haha[0])
+        writer.write(writer_haha[0].trim())
         writer.close()
         return
     }
