@@ -2,7 +2,6 @@
 
 package lesson5.task1
 
-import kotlin.time.Duration.Companion.seconds
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -100,7 +99,7 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val namesToGrades = mutableMapOf<Int, MutableList<String>>()
-    for ((key: String, name) in grades) {
+    for ((key, name) in grades) {
         if (namesToGrades[name] != null)
             namesToGrades[name]?.add(key)
         else namesToGrades[name] = mutableListOf(key)
@@ -199,7 +198,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String = TODO()
 
 /**
  * Средняя (3 балла)
@@ -300,10 +299,11 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    val map = mutableMapOf<Int, Int>()
     var sol = Pair(-1, -1)
     for (n in list.indices) {
-        if ((number - list[n] in list) && (n != list.indexOf(number - list[n])))
-            return Pair(minOf(n, list.indexOf(number - list[n])), maxOf(n, list.indexOf(number - list[n])))
+        if (number - list[n] in map) sol = Pair(map[number - list[n]]!!, n)
+        else map[list[n]] = n
     }
     return sol
 }

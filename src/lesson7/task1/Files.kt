@@ -167,9 +167,9 @@ fun alignFileByWidth(inputName: String, outputName: String) {
             writer.write(line + "\n")
         } else {
             val toWrite = StringBuilder()
-            val diff = max - words.joinToString(separator = "").replace(" +".toRegex(), " ").trim().length
-            val avgSpace = diff / spacesAmount
-            var extraSpace = diff % spacesAmount
+            val difference = max - words.joinToString(separator = "").replace(" +".toRegex(), " ").trim().length
+            val avgSpace = difference / spacesAmount
+            var extraSpace = difference % spacesAmount
             words.forEach { word ->
                 if (extraSpace > 0) {
                     toWrite.append(word.trim() + " ".repeat(avgSpace + 1))
