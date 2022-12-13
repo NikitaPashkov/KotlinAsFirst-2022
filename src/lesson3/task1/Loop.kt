@@ -77,10 +77,10 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var x = 0
-    var number = kotlin.math.abs(n)
+    var number = abs(n)
     do {
         x++
-        number = number.div(10)
+        number /= 10
     } while (number > 0)
     return x
 }
@@ -176,16 +176,9 @@ fun lcm(m: Int, n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    var x = m
-    var y = n
-    while (x != y)
-        if (x > y) x -= y else y -= x
-    return when {
-        (y != 1) && (x != 1) -> x == 1
-        else -> true
-    }
-}
+fun isCoPrime(m: Int, n: Int): Boolean = gcd(m, n) == 1
+
+fun gcd(m: Int, n: Int): Int = (n * m) / lcm(m, n)
 
 /**
  * Средняя (3 балла)

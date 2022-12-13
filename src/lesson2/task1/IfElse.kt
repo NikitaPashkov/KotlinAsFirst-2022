@@ -117,18 +117,8 @@ fun whichRookThreatens(
     rookX2: Int, rookY2: Int
 ): Int {
     var total = 0
-    val a = (kingX == rookX1) || (kingY == rookY1)
-    val b = (kingY == rookY2) || (kingX == rookX2)
-    return if (a) {
-        if (!b) {
-            1
-        } else {
-            3
-        }
-    } else if (b) 2
-    else {
-        0
-    }
+    if (kingX == rookX1 || kingY == rookY1) total++
+    if (kingY == rookY2 || kingX == rookX2) total += 2
     return total
 }
 

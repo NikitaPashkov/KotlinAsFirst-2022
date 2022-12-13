@@ -161,7 +161,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     File(inputName).forEachLine { max = max(max, it.trim().length) }
     File(inputName).forEachLine {
         val line = it.trim()
-        val words = line.split(" ")
+        val words = line.split(Regex(" +"))
         val spacesAmount = words.size - 1
         if (spacesAmount == 0) {
             writer.write(line + "\n")

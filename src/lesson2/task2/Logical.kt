@@ -4,6 +4,8 @@ package lesson2.task2
 
 import lesson1.task1.sqr
 import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 /**
@@ -67,14 +69,8 @@ fun circleInside(
  */
 
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    val min_ab = (if (a <= b) a else b)
-    val min_ac = (if (a <= c) a else c)
-    val min_d = (if (min_ab <= min_ac) min_ab else min_ac)
-
-    val max_ab = (if (a >= b) a else b)
-    val max_ac = (if (a >= c) a else c)
-    val max_d = (if (max_ab >= max_ac) max_ab else max_ac)
-    val wav = c + a - max_d - min_d + b
-
-    return min_d <= (if (r < s) r else s) && wav <= (if (r >= s) r else s)
+    val minA = min(min(a, b), min(a, c))
+    val maxA = max(max(a, b), max(a, c))
+    val avgA = a + b + c - maxA - minA
+    return minA <= min(r, s) && avgA <= max(r, s)
 }
